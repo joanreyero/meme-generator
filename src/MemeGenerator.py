@@ -43,6 +43,7 @@ class MemeEngine():
 
             draw.text((x, y), text, font=font)
 
+        img.show()
         out_path = f'{self.output_dir}/{img_path.split("/")[-1]}'
         img.save(out_path)
         return out_path

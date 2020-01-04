@@ -9,6 +9,7 @@ from .TextIngestor import TextIngestor
 
 
 class Ingestor(IngestorInterface):
+    """Ingestor class that calls the appripiate importer."""
     importers = [DocxIngestor, CSVIngestor,
                  PDFIngestor, TextIngestor]
 

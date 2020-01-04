@@ -15,15 +15,15 @@ meme = MemeEngine('./static')
 def setup():
     """ Load all resources """
 
-    quote_files = ['./_data/quotes/DogQuotesTXT.txt',
-                   './_data/quotes/DogQuotesDOCX.docx',
-                   './_data/quotes/DogQuotesPDF.pdf',
-                   './_data/quotes/DogQuotesCSV.csv']
+    quote_files = ['./_data/quotes/quotesText.txt',
+                   './_data/quotes/quotesDocx.docx',
+                   './_data/quotes/quotesPDF.pdf',
+                   './_data/quotes/quotesCSV.csv']
 
     quotes = [quote for quote_file in quote_files
               for quote in Ingestor.parse(quote_file)]
 
-    images_path = "./_data/photos/dog/"
+    images_path = "./_data/photos/"
 
     imgs = [images_path + image for image in os.listdir(images_path)]
 
@@ -53,13 +53,6 @@ def meme_form():
 def meme_post():
     """ Create a user defined meme """
 
-    # @TODO:
-    # 1. Use requests to save the image from the image_url
-    #    form param to a temp local file.
-    # 2. Use the meme object to generate a meme using this temp
-    #    file and the body and author form paramaters.
-    # 3. Remove the temporary saved image.
-
     img_url = request.form['image_url']
     body = request.form['body']
     author = request.form['author']
@@ -69,11 +62,7 @@ def meme_post():
     open(tmp, 'wb').write(r.content)
 
     path = meme.make_meme(tmp, body, author)
-
     os.remove(tmp)
-
-
-
     return render_template('meme.html', path=path)
 
 

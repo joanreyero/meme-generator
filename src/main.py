@@ -5,18 +5,14 @@ import random
 from QuoteEngine import Ingestor
 from MemeEngine import MemeEngine
 
-#print(Ingestor.parse('./data/cats.csv'))
-# print(Ingestor.parse('./data/cats.docx'))
-# print(Ingestor.parse('./data/cats.pdf'))
-# print(Ingestor.parse('./data/cats.txt'))
-
-#meme = MemeEngine('/Users/joanreyero/Dropbox/meme-generator')
-#meme.make_meme('/Users/joanreyero/Dropbox/meme-generator/src/_data/photos/dog/xan#der_1.jpg', 'Make America Great Again', 'Trump')
-
 
 def main():
+    """Generates a meme and returns the output path.
+    If an image, text and author are provided, they are used.
+    Otherwise random inputs from the system are used.
+    """
     if not args.image:
-        images_path = '_data/photos/dog/'
+        images_path = '_data/photos/'
         image = images_path + random.choice(os.listdir(images_path))
 
     if not args.quote:
@@ -27,8 +23,7 @@ def main():
                     os.listdir(quotes_path))))
 
     meme_generator = MemeEngine('./static')
-    meme_generator.make_meme(image, quote.body, quote.author)
-
+    return meme_generator.make_meme(image, quote.body, quote.author)
 
 
 if __name__ == '__main__':
