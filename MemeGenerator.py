@@ -1,0 +1,49 @@
+from PIL import Image, ImageDraw, ImageFont
+from numpy.random import randint
+
+class MemeEngine():
+    def __init__(self, output_dir):
+        self.output_dir = output_dir
+
+    def make_meme(self, img_path:str,
+                  text=None, author=None,
+                  width=500) -> str:
+        """Create a Postcard With a Text Greeting
+
+        Arguments:
+        img_path {str} -- the file location for the input image.
+        text {str} -- the body of the quote.
+        author {str} -- the author of the quote.
+        width (def: 500px) {float} -- the width of the image.
+        Returns:
+        str -- the file path to the output image.
+        """
+        img = Image.open(img_path)
+
+        if width is not None:
+            ratio = width/float(img.size[0])
+            height = int(ratio*float(img.size[1]))
+            img = img.resize((width, height), Image.NEAREST)
+
+        if text is not None:
+            if author is not None:
+                text = f'{text}\n    - {author}'
+            draw = ImageDraw.Draw(img)
+            font = ImageFont.truetype('_data/fonts/LilitaOne-Regular.ttf', 25)
+            text_width, text_height = draw.textsize(text, font=font)
+            width, height = img.size
+            x = randint(width - text_width, size=1)[0]
+            y = randint(height - text_height, size=1)[0]
+
+            # border
+            draw.text((x-2, y-2), text, font=font, fill='black')
+            draw.text((x+2, y-2), text, font=font, fill='black')
+            draw.text((x-2, y+2), text, font=font, fill='black')
+            draw.text((x+2, y+2), text, font=font, fill='black')
+
+            draw.text((x, y), text, font=font)
+
+        img.show()
+        out_path = f'{self.output_dir}/{img_path.split("/")[-1]}'
+        img.save(out_path)
+        return out_path

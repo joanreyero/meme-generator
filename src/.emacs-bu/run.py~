@@ -1,6 +1,0 @@
-from IngestEngine import Ingestor
-
-#print(DocxIngestor.parse('./data/cats.docx'))
-
-print(Ingestor.parse('./data/cats.docx'))
-#print(Ingestor.parse('./data/cats.pdf'))
